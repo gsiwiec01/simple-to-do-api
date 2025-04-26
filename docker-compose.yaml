@@ -1,0 +1,35 @@
+﻿services:
+  todo.api:
+    image: todo.api
+    hostname: todo.api
+    build:
+      context: .
+      dockerfile: ToDo.API/Dockerfile
+    depends_on:
+      database:
+        condition: service_healthy
+    ports:
+      - 8090:8080
+    networks:
+      - backend
+
+  database:
+    image: postgres
+    hostname: postgres
+    restart: always
+    healthcheck:
+      test: [ "CMD-SHELL", "sh -c 'pg_isready -U root'" ]
+      interval: 10s
+      timeout: 3s
+    volumes:
+      - ./db:/var/lib/postgresql/data
+    networks:
+      - backend
+    environment:
+      POSTGRES_USER: root
+      POSTGRES_PASSWORD: root
+      POSTGRES_HOST_AUTH_METHOD: trust
+    
+networks:
+  backend:
+    driver: bridge

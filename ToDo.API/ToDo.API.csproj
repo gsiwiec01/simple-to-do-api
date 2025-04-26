@@ -11,4 +11,15 @@
         <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="9.0.4"/>
     </ItemGroup>
 
+    <ItemGroup>
+      <Content Include="..\.dockerignore">
+        <Link>.dockerignore</Link>
+      </Content>
+    </ItemGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\ToDo.Application\ToDo.Application.csproj" />
+      <ProjectReference Include="..\ToDo.Persistence\ToDo.Persistence.csproj" />
+    </ItemGroup>
+
 </Project>
