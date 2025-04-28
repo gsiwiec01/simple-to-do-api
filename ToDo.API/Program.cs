@@ -1,3 +1,4 @@
+using ToDoApp.API.Endpoints;
 using ToDoApp.Application;
 using ToDoApp.Persistence;
 using ToDoApp.Persistence.Data;
@@ -21,5 +22,7 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 app.UseDatabase();
+
+app.MapToDoEndpoints();
 
 app.Run();
