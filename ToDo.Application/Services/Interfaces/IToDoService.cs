@@ -11,4 +11,5 @@ public interface IToDoService
     Task<List<ToDo>> GetIncomingToDosAsync(IncomingScope scope);
     Task CreateToDoAsync(CreateToDoCommand command);
     Task UpdateToDoAsync(UpdateToDoCommand command);
+    Task SetPercentCompleteAsync(SetPercentCompleteCommand command);
 }

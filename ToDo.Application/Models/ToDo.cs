@@ -31,4 +31,9 @@ public class ToDo
         Expiry = expiry;
         PercentComplete = percentComplete;
     }
+
+    public void SetPercentComplete(int percentComplete)
+    {
+        PercentComplete = percentComplete;
+    }
 }

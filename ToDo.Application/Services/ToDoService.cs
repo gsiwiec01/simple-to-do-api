@@ -88,4 +88,14 @@ public class ToDoService : IToDoService
         todo.Update(command.Title, command.Description, command.Expiry, command.PercentComplete);
         await _unitOfWork.SaveChangesAsync();
     }
+
+    public async Task SetPercentCompleteAsync(SetPercentCompleteCommand command)
+    {
+        var todo = await _toDoRepository.GetByIdAsync(command.Id);
+        if (todo is null)
+            throw new KeyNotFoundException($"ToDo with id {command.Id} not found");
+        
+        todo.SetPercentComplete(command.PercentComplete);
+        await _unitOfWork.SaveChangesAsync();
+    }
 }
