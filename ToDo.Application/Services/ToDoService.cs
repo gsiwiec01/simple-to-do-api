@@ -18,12 +18,12 @@ public class ToDoService : IToDoService
         _unitOfWork = unitOfWork;
     }
 
-    public Task<List<ToDo>> GetAllToDoAsync()
+    public Task<List<ToDo>> GetAllAsync()
     {
         return _toDoRepository.GetAllAsync();
     }
 
-    public async Task<ToDo?> GetToDoByIdAsync(Guid id)
+    public async Task<ToDo?> GetByIdAsync(Guid id)
     {
         var todo = await _toDoRepository.GetByIdAsync(id);
         if (todo is null)
@@ -32,7 +32,7 @@ public class ToDoService : IToDoService
         return todo;
     }
 
-    public Task<List<ToDo>> GetIncomingToDosAsync(IncomingScope scope)
+    public Task<List<ToDo>> GetIncomingAsync(IncomingScope scope)
     {
         var today = DateTime.Today;
         
@@ -76,7 +76,7 @@ public class ToDoService : IToDoService
         return _toDoRepository.GetIncomingBetweenAsync(start, end);
     }
 
-    public async Task CreateToDoAsync(CreateToDoCommand command)
+    public async Task CreateAsync(CreateToDoCommand command)
     {
         var todo = ToDo.Create(command.Id, command.Title, command.Description, command.Expiry);
         
@@ -84,7 +84,7 @@ public class ToDoService : IToDoService
         await _unitOfWork.SaveChangesAsync();
     }
 
-    public async Task UpdateToDoAsync(UpdateToDoCommand command)
+    public async Task UpdateAsync(UpdateToDoCommand command)
     {
         var todo = await _toDoRepository.GetByIdAsync(command.Id);
         if (todo is null)
