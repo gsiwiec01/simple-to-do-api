@@ -60,5 +60,11 @@ public static class ToDoEndpoints
             await service.SetPercentCompleteAsync(command);
             return Results.NoContent();
         });
+        
+        group.MapPatch("/{id:guid}/done", async (Guid id, IToDoService service) =>
+        {
+            await service.MarkAsDoneAsync(id);
+            return Results.NoContent();
+        });
     }
 }
