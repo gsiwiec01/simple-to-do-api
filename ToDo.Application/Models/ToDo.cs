@@ -7,7 +7,6 @@ public class ToDo
     public string Description { get; private set; }
     public DateTime Expiry { get; private set; }
     public int PercentComplete { get; private set; }
-    public bool IsDone { get; private set; }
 
     private ToDo()
     {
@@ -21,8 +20,7 @@ public class ToDo
             Title = title,
             Description = description,
             Expiry = expiry,
-            PercentComplete = 0,
-            IsDone = false
+            PercentComplete = 0
         };
     }
 }

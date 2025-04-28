@@ -35,9 +35,6 @@ namespace ToDo.Persistence.Migrations
                     b.Property<DateTime>("Expiry")
                         .HasColumnType("timestamp with time zone");
 
-                    b.Property<bool>("IsDone")
-                        .HasColumnType("boolean");
-
                     b.Property<int>("PercentComplete")
                         .HasColumnType("integer");
 
