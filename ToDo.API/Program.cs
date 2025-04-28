@@ -1,3 +1,4 @@
+using ToDoApp.Persistence;
 using ToDoApp.Persistence.Data;
 
 var builder = WebApplication.CreateBuilder(args);

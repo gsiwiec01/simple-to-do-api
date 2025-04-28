@@ -3,8 +3,11 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
+using ToDoApp.Application.Interfaces.Persistence;
+using ToDoApp.Persistence.Data;
+using ToDoApp.Persistence.Repositories;
 
-namespace ToDoApp.Persistence.Data;
+namespace ToDoApp.Persistence;
 
 public static class Extensions
 {
@@ -25,6 +28,9 @@ public static class Extensions
             ctxOptions.UseNpgsql(connectionString,
                 opt => { opt.MigrationsAssembly(typeof(Extensions).Assembly.FullName); });
         });
+
+        services.AddScoped<IUnitOfWork, UnitOfWork>();
+        services.AddScoped<IToDoRepository, ToDoRepository>();
 
         return services;
     }
