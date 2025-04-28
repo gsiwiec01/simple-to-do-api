@@ -1,4 +1,5 @@
 using Scalar.AspNetCore;
+using ToDoApp.API.Configuration.Exceptions;
 using ToDoApp.API.Endpoints;
 using ToDoApp.Application;
 using ToDoApp.Persistence;
@@ -12,6 +13,7 @@ builder.Services.AddOpenApi();
 
 builder.Services.AddDatabase(builder.Configuration, "ToDoDatabase");
 builder.Services.AddServices();
+builder.Services.AddExceptionHandler<GlobalExceptionHandler>();
 
 var app = builder.Build();
 
@@ -25,6 +27,7 @@ if (app.Environment.IsDevelopment())
     });
 }
 
+app.UseExceptionHandler();
 app.UseHttpsRedirection();
 app.UseDatabase();
 

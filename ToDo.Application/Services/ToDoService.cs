@@ -1,5 +1,6 @@
 using ToDoApp.Application.Commands;
 using ToDoApp.Application.Enums;
+using ToDoApp.Application.Exceptions;
 using ToDoApp.Application.Interfaces.Persistence;
 using ToDoApp.Application.Models;
 using ToDoApp.Application.Services.Interfaces;
@@ -64,7 +65,7 @@ public class ToDoService : IToDoService
 
             default:
             {
-                throw new ArgumentOutOfRangeException(nameof(scope), scope, "Invalid incoming scope value");
+                throw new UnknownScopeOfIncomingToDosException(scope.ToString());
             }
         }
 
@@ -83,7 +84,7 @@ public class ToDoService : IToDoService
     {
         var todo = await _toDoRepository.GetByIdAsync(command.Id);
         if (todo is null)
-            throw new KeyNotFoundException($"ToDo with id {command.Id} not found");
+            throw new ToDoDoesNotExistException(command.Id);
         
         todo.Update(command.Title, command.Description, command.Expiry, command.PercentComplete);
         await _unitOfWork.SaveChangesAsync();
@@ -93,7 +94,7 @@ public class ToDoService : IToDoService
     {
         var todo = await _toDoRepository.GetByIdAsync(command.Id);
         if (todo is null)
-            throw new KeyNotFoundException($"ToDo with id {command.Id} not found");
+            throw new ToDoDoesNotExistException(command.Id);
         
         todo.SetPercentComplete(command.PercentComplete);
         await _unitOfWork.SaveChangesAsync();
@@ -103,7 +104,7 @@ public class ToDoService : IToDoService
     {
         var todo = await _toDoRepository.GetByIdAsync(id);
         if (todo is null)
-            throw new KeyNotFoundException($"ToDo with id {id} not found");
+            throw new ToDoDoesNotExistException(id);
         
         todo.SetPercentComplete(100);
         await _unitOfWork.SaveChangesAsync();
@@ -113,7 +114,7 @@ public class ToDoService : IToDoService
     {
         var todo = await _toDoRepository.GetByIdAsync(id);
         if (todo is null)
-            throw new KeyNotFoundException($"ToDo with id {id} not found");
+            throw new ToDoDoesNotExistException(id);
         
         _toDoRepository.Delete(todo);
         await _unitOfWork.SaveChangesAsync();
