@@ -13,6 +13,7 @@ builder.Services.AddOpenApi();
 
 builder.Services.AddDatabase(builder.Configuration, "ToDoDatabase");
 builder.Services.AddServices();
+builder.Services.AddProblemDetails();
 builder.Services.AddExceptionHandler<GlobalExceptionHandler>();
 
 var app = builder.Build();
