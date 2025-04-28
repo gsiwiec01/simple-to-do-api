@@ -66,5 +66,11 @@ public static class ToDoEndpoints
             await service.MarkAsDoneAsync(id);
             return Results.NoContent();
         });
+
+        group.MapDelete("/{id:guid}", async (Guid id, IToDoService service) =>
+        {
+            await service.DeleteAsync(id);
+            return Results.NoContent();
+        });
     }
 }

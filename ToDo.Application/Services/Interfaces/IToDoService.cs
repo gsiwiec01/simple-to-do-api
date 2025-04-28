@@ -13,4 +13,5 @@ public interface IToDoService
     Task UpdateToDoAsync(UpdateToDoCommand command);
     Task SetPercentCompleteAsync(SetPercentCompleteCommand command);
     Task MarkAsDoneAsync(Guid id);
+    Task DeleteAsync(Guid id);
 }

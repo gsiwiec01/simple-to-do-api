@@ -108,4 +108,14 @@ public class ToDoService : IToDoService
         todo.SetPercentComplete(100);
         await _unitOfWork.SaveChangesAsync();
     }
+
+    public async Task DeleteAsync(Guid id)
+    {
+        var todo = await _toDoRepository.GetByIdAsync(id);
+        if (todo is null)
+            throw new KeyNotFoundException($"ToDo with id {id} not found");
+        
+        _toDoRepository.Delete(todo);
+        await _unitOfWork.SaveChangesAsync();
+    }
 }
