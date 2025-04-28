@@ -1,3 +1,4 @@
+using Scalar.AspNetCore;
 using ToDoApp.API.Endpoints;
 using ToDoApp.Application;
 using ToDoApp.Persistence;
@@ -18,6 +19,10 @@ var app = builder.Build();
 if (app.Environment.IsDevelopment())
 {
     app.MapOpenApi();
+    app.MapScalarApiReference(opt =>
+    {
+        opt.WithTitle("Simple ToDo Api");
+    });
 }
 
 app.UseHttpsRedirection();
