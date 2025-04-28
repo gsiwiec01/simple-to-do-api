@@ -12,7 +12,7 @@ COPY ["ToDo.Application/ToDo.Application.csproj", "ToDo.Application/"]
 COPY ["ToDo.Persistence/ToDo.Persistence.csproj", "ToDo.Persistence/"]
 RUN dotnet restore "ToDo.API/ToDo.API.csproj"
 COPY . .
-WORKDIR "/src/ToDo.API"
+WORKDIR "/src/ToDo.API" 
 RUN dotnet build "ToDo.API.csproj" -c $BUILD_CONFIGURATION -o /app/build
 
 FROM build AS publish

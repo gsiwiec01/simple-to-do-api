@@ -24,7 +24,7 @@
       interval: 10s
       timeout: 3s
     volumes:
-      - ./db:/var/lib/postgresql/data
+      - /var/lib/postgresql/data
     networks:
       - backend
     environment:

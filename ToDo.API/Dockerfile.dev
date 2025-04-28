@@ -1,12 +1,13 @@
-﻿FROM mcr.microsoft.com/dotnet/sdk:9.0
+﻿FROM mcr.microsoft.com/dotnet/sdk:9.0 AS build
 
+ENV ASPNETCORE_ENVIRONMENT=Development
 WORKDIR /app
 
 COPY ["ToDo.API/ToDo.API.csproj", "ToDo.API/"]
 COPY ["ToDo.Application/ToDo.Application.csproj", "ToDo.Application/"]
 COPY ["ToDo.Persistence/ToDo.Persistence.csproj", "ToDo.Persistence/"]
-RUN dotnet restore "ToDo.API/ToDo.API.csproj"
 
+RUN dotnet restore "ToDo.API/ToDo.API.csproj"
 COPY . .
 
 ENV ASPNETCORE_ENVIRONMENT=Development
@@ -14,4 +15,4 @@ ENV ASPNETCORE_ENVIRONMENT=Development
 EXPOSE 8080
 EXPOSE 8081
 
-CMD ["dotnet", "run", "--project", "ToDo.API/ToDo.API.csproj", "-c", "Debug"]
+ENTRYPOINT ["dotnet", "ToDo.API.dll"]

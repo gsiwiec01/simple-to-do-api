@@ -24,10 +24,11 @@
       interval: 10s
       timeout: 3s
     volumes:
-      - ./db:/var/lib/postgresql/data
+      - /var/lib/postgresql/data
     networks:
       - backend
     environment:
+      POSTGRES_DB: todo
       POSTGRES_USER: root
       POSTGRES_PASSWORD: root
       POSTGRES_HOST_AUTH_METHOD: trust
