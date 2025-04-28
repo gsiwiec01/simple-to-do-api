@@ -5,6 +5,7 @@ namespace ToDoApp.Application.Services.Interfaces;
 
 public interface IToDoService
 {
-    Task<List<ToDo>> GetAllToDo();
-    Task CreateToDo(CreateToDoCommand command);
+    Task<List<ToDo>> GetAllToDoAsync();
+    Task<ToDo?> GetToDoByIdAsync(Guid id);
+    Task CreateToDoAsync(CreateToDoCommand command);
 }

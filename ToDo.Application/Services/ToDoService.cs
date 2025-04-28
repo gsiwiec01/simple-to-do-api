@@ -16,12 +16,17 @@ public class ToDoService : IToDoService
         _unitOfWork = unitOfWork;
     }
 
-    public Task<List<ToDo>> GetAllToDo()
+    public Task<List<ToDo>> GetAllToDoAsync()
     {
         return _toDoRepository.GetAllAsync();
     }
 
-    public async Task CreateToDo(CreateToDoCommand command)
+    public Task<ToDo?> GetToDoByIdAsync(Guid id)
+    {
+        return _toDoRepository.GetByIdAsync(id);
+    }
+
+    public async Task CreateToDoAsync(CreateToDoCommand command)
     {
         var todo = ToDo.Create(command.Id, command.Title, command.Description, command.Expiry);
         
