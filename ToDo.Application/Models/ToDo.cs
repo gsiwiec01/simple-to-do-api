@@ -12,4 +12,17 @@ public class ToDo
     private ToDo()
     {
     }
+
+    public static ToDo Create(Guid id, string title, string description, DateTime expiry)
+    {
+        return new ToDo()
+        {
+            Id = id,
+            Title = title,
+            Description = description,
+            Expiry = expiry,
+            PercentComplete = 0,
+            IsDone = false
+        };
+    }
 }
