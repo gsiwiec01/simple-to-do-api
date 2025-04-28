@@ -1,8 +1,12 @@
+using ToDo.Persistence.Data;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
 builder.Services.AddOpenApi();
+
+builder.Services.AddDatabase(builder.Configuration, "ToDoDatabase");
 
 var app = builder.Build();
 
@@ -13,5 +17,6 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
+app.UseDatabase();
 
 app.Run();
