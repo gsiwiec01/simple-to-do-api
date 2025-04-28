@@ -10,4 +10,5 @@ public interface IToDoService
     Task<ToDo?> GetToDoByIdAsync(Guid id);
     Task<List<ToDo>> GetIncomingToDosAsync(IncomingScope scope);
     Task CreateToDoAsync(CreateToDoCommand command);
+    Task UpdateToDoAsync(UpdateToDoCommand command);
 }

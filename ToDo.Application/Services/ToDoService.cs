@@ -78,4 +78,14 @@ public class ToDoService : IToDoService
         await _toDoRepository.AddAsync(todo);
         await _unitOfWork.SaveChangesAsync();
     }
+
+    public async Task UpdateToDoAsync(UpdateToDoCommand command)
+    {
+        var todo = await _toDoRepository.GetByIdAsync(command.Id);
+        if (todo is null)
+            throw new KeyNotFoundException($"ToDo with id {command.Id} not found");
+        
+        todo.Update(command.Title, command.Description, command.Expiry, command.PercentComplete);
+        await _unitOfWork.SaveChangesAsync();
+    }
 }

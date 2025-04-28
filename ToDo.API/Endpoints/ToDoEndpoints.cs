@@ -38,5 +38,19 @@ public static class ToDoEndpoints
 
             return Results.Created($"/todos/{id}", id);
         });
+
+        group.MapPut("/{id:guid}", async (Guid id, UpdateToDoRequest request, IToDoService service) =>
+        {
+            var command = new UpdateToDoCommand(
+                id,
+                request.Title,
+                request.Description,
+                request.Expiry,
+                request.PercentComplete
+            );
+
+            await service.UpdateToDoAsync(command);
+            return Results.NoContent();
+        });
     }
 }

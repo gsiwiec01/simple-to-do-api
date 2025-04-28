@@ -23,4 +23,12 @@ public class ToDo
             PercentComplete = 0
         };
     }
+
+    public void Update(string title, string description, DateTime expiry, int percentComplete)
+    {
+        Title = title;
+        Description = description;
+        Expiry = expiry;
+        PercentComplete = percentComplete;
+    }
 }
