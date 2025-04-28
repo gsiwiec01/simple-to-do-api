@@ -106,7 +106,7 @@ public class ToDoService : IToDoService
         if (todo is null)
             throw new ToDoDoesNotExistException(id);
         
-        todo.SetPercentComplete(100);
+        todo.MarkAsDone();
         await _unitOfWork.SaveChangesAsync();
     }
 

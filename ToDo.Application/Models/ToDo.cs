@@ -11,21 +11,36 @@ public class ToDo
     private ToDo()
     {
     }
-
+    
     public static ToDo Create(Guid id, string title, string description, DateTime expiry)
     {
-        return new ToDo()
+        if (string.IsNullOrWhiteSpace(title))
+            throw new ArgumentException("Title cannot be empty.", nameof(title));
+
+        if (expiry < DateTime.UtcNow.Date)
+            throw new ArgumentException("Expiry date cannot be in the past.", nameof(expiry));
+
+        return new ToDo
         {
             Id = id,
             Title = title,
             Description = description,
             Expiry = expiry,
-            PercentComplete = 0
+            PercentComplete = 0,
         };
     }
 
     public void Update(string title, string description, DateTime expiry, int percentComplete)
     {
+        if (string.IsNullOrWhiteSpace(title))
+            throw new ArgumentException("Title cannot be empty.", nameof(title));
+
+        if (expiry.Date < DateTime.UtcNow.Date)
+            throw new ArgumentException("Expiry date cannot be earlier than today.", nameof(expiry));
+        
+        if (percentComplete is < 0 or > 100)
+            throw new ArgumentOutOfRangeException(nameof(percentComplete), "Percent complete must be between 0 and 100.");
+
         Title = title;
         Description = description;
         Expiry = expiry;
@@ -34,6 +49,14 @@ public class ToDo
 
     public void SetPercentComplete(int percentComplete)
     {
+        if (percentComplete is < 0 or > 100)
+            throw new ArgumentOutOfRangeException(nameof(percentComplete), "Percent complete must be between 0 and 100.");
+
         PercentComplete = percentComplete;
+    }
+
+    public void MarkAsDone()
+    {
+        PercentComplete = 100;
     }
 }
