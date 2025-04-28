@@ -4,7 +4,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 
-namespace ToDo.Persistence.Data;
+namespace ToDoApp.Persistence.Data;
 
 public static class Extensions
 {
