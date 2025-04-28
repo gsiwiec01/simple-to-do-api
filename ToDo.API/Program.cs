@@ -1,3 +1,4 @@
+using ToDoApp.Application;
 using ToDoApp.Persistence;
 using ToDoApp.Persistence.Data;
 
@@ -8,6 +9,7 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddOpenApi();
 
 builder.Services.AddDatabase(builder.Configuration, "ToDoDatabase");
+builder.Services.AddServices();
 
 var app = builder.Build();
 
