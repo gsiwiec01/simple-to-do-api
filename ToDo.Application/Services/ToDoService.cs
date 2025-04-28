@@ -23,9 +23,13 @@ public class ToDoService : IToDoService
         return _toDoRepository.GetAllAsync();
     }
 
-    public Task<ToDo?> GetToDoByIdAsync(Guid id)
+    public async Task<ToDo?> GetToDoByIdAsync(Guid id)
     {
-        return _toDoRepository.GetByIdAsync(id);
+        var todo = await _toDoRepository.GetByIdAsync(id);
+        if (todo is null)
+            throw new ToDoDoesNotExistException(id);
+
+        return todo;
     }
 
     public Task<List<ToDo>> GetIncomingToDosAsync(IncomingScope scope)
