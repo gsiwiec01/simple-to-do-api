@@ -1,4 +1,5 @@
 using ToDoApp.Application.Commands;
+using ToDoApp.Application.Enums;
 using ToDoApp.Application.Interfaces.Persistence;
 using ToDoApp.Application.Models;
 using ToDoApp.Application.Services.Interfaces;
@@ -24,6 +25,50 @@ public class ToDoService : IToDoService
     public Task<ToDo?> GetToDoByIdAsync(Guid id)
     {
         return _toDoRepository.GetByIdAsync(id);
+    }
+
+    public Task<List<ToDo>> GetIncomingToDosAsync(IncomingScope scope)
+    {
+        var today = DateTime.Today;
+        
+        DateTime start;
+        DateTime end;
+
+        switch (scope)
+        {
+            case IncomingScope.Today:
+            {
+                start = today;
+                end = today.AddDays(1).AddTicks(-1);
+                
+                break;
+            }
+
+            case IncomingScope.Tomorrow:
+            {
+                start = today.AddDays(1);
+                end = today.AddDays(2).AddTicks(-1);
+                
+                break;
+            }
+
+            case IncomingScope.Week:
+            {
+                var daysUntilEndOfWeek = DayOfWeek.Sunday - today.DayOfWeek;
+                
+                start = today;
+                end = today.AddDays(daysUntilEndOfWeek + 1).AddTicks(-1);
+                
+                break;
+            }
+
+            default:
+            {
+                throw new ArgumentOutOfRangeException(nameof(scope), scope, "Invalid incoming scope value");
+            }
+        }
+
+        return _toDoRepository.GetIncomingBetweenAsync(start, end);
     }
 
     public async Task CreateToDoAsync(CreateToDoCommand command)

@@ -5,6 +5,5 @@ public record ToDoDto(
     string Title,
     string Description,
     DateTime Expiry,
-    int PercentComplete,
-    bool IsDone
+    int PercentComplete
 );
