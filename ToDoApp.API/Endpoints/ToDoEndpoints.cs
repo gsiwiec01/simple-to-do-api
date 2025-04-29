@@ -1,4 +1,6 @@
+using FluentValidation;
 using ToDoApp.API.Requests;
+using ToDoApp.API.Requests.Validators;
 using ToDoApp.Application.Commands;
 using ToDoApp.Application.Enums;
 using ToDoApp.Application.Services.Interfaces;
@@ -29,8 +31,12 @@ public static class ToDoEndpoints
             return Results.Ok(todos);
         });
 
-        group.MapPost("/", async (CreateToDoRequest request, IToDoService service) =>
+        group.MapPost("/", async (CreateToDoRequest request, IValidator<CreateToDoRequest> validator, IToDoService service) =>
         {
+            var validationResult = await validator.ValidateAsync(request);
+            if (!validationResult.IsValid)
+                return Results.BadRequest(validationResult.Errors);
+            
             var id = Guid.NewGuid();
             var command = new CreateToDoCommand(id, request.Title, request.Description, request.Expiry);
 
@@ -39,8 +45,12 @@ public static class ToDoEndpoints
             return Results.Created($"/todos/{id}", id);
         });
 
-        group.MapPut("/{id:guid}", async (Guid id, UpdateToDoRequest request, IToDoService service) =>
+        group.MapPut("/{id:guid}", async (Guid id, UpdateToDoRequest request, IValidator<UpdateToDoRequest> validator, IToDoService service) =>
         {
+            var validationResult = await validator.ValidateAsync(request);
+            if (!validationResult.IsValid)
+                return Results.BadRequest(validationResult.Errors);
+            
             var command = new UpdateToDoCommand(
                 id,
                 request.Title,
@@ -53,8 +63,12 @@ public static class ToDoEndpoints
             return Results.NoContent();
         });
 
-        group.MapPatch("/{id:guid}/percent", async (Guid id, SetPercentCompleteRequest request, IToDoService service) =>
+        group.MapPatch("/{id:guid}/percent", async (Guid id, SetPercentCompleteRequest request, IValidator<SetPercentCompleteRequest> validator, IToDoService service) =>
         {
+            var validationResult = await validator.ValidateAsync(request);
+            if (!validationResult.IsValid)
+                return Results.BadRequest(validationResult.Errors);
+            
             var command = new SetPercentCompleteCommand(id, request.PercentComplete);
 
             await service.SetPercentCompleteAsync(command);

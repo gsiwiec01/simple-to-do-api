@@ -1,6 +1,8 @@
+using FluentValidation;
 using Scalar.AspNetCore;
 using ToDoApp.API.Configuration.Exceptions;
 using ToDoApp.API.Endpoints;
+using ToDoApp.API.Requests.Validators;
 using ToDoApp.Application;
 using ToDoApp.Persistence;
 
@@ -14,6 +16,7 @@ builder.Services.AddDatabase(builder.Configuration, "ToDoDatabase"); // Adds the
 builder.Services.AddServices(); // Registers application and infrastructure services.
 builder.Services.AddProblemDetails(); // Adds RFC 7807 standardized error responses.
 builder.Services.AddExceptionHandler<GlobalExceptionHandler>(); // Registers the global exception handler.
+builder.Services.AddValidatorsFromAssemblyContaining<CreateToDoRequestValidator>(); // Adds FluentValidation validators.
 
 var app = builder.Build();
 
