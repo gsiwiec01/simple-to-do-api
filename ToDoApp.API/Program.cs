@@ -35,3 +35,5 @@ app.UseDatabase();
 app.MapToDoEndpoints();
 
 app.Run();
+
+public partial class Program { }
