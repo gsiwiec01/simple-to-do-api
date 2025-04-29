@@ -18,4 +18,8 @@
         <Using Include="Xunit"/>
     </ItemGroup>
 
+    <ItemGroup>
+      <ProjectReference Include="..\..\ToDoApp.API\ToDoApp.API.csproj" />
+    </ItemGroup>
+
 </Project>
