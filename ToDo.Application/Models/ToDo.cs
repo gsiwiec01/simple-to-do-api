@@ -1,3 +1,5 @@
+using ToDoApp.Application.Exceptions;
+
 namespace ToDoApp.Application.Models;
 
 public class ToDo
@@ -15,10 +17,10 @@ public class ToDo
     public static ToDo Create(Guid id, string title, string description, DateTime expiry)
     {
         if (string.IsNullOrWhiteSpace(title))
-            throw new ArgumentException("Title cannot be empty.", nameof(title));
+            throw new ToDoTitleCannotBeEmptyException();
 
         if (expiry < DateTime.UtcNow.Date)
-            throw new ArgumentException("Expiry date cannot be in the past.", nameof(expiry));
+            throw new ToDoExpiryDateCannotBeInThePastException();
 
         return new ToDo
         {
@@ -33,13 +35,13 @@ public class ToDo
     public void Update(string title, string description, DateTime expiry, int percentComplete)
     {
         if (string.IsNullOrWhiteSpace(title))
-            throw new ArgumentException("Title cannot be empty.", nameof(title));
+            throw new ToDoTitleCannotBeEmptyException();
 
         if (expiry.Date < DateTime.UtcNow.Date)
-            throw new ArgumentException("Expiry date cannot be earlier than today.", nameof(expiry));
-        
+            throw new ToDoExpiryDateCannotBeInThePastException();
+
         if (percentComplete is < 0 or > 100)
-            throw new ArgumentOutOfRangeException(nameof(percentComplete), "Percent complete must be between 0 and 100.");
+            throw new ToDoPercentCompleteMustBeBetweenException();
 
         Title = title;
         Description = description;
@@ -50,7 +52,7 @@ public class ToDo
     public void SetPercentComplete(int percentComplete)
     {
         if (percentComplete is < 0 or > 100)
-            throw new ArgumentOutOfRangeException(nameof(percentComplete), "Percent complete must be between 0 and 100.");
+            throw new ToDoPercentCompleteMustBeBetweenException();
 
         PercentComplete = percentComplete;
     }
