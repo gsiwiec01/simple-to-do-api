@@ -59,7 +59,7 @@ public class ToDoEndpointTests : IntegrationTestBase
     {
         // Arrange
         await CreateToDo("Todo1", DateTime.UtcNow.AddHours(1));
-        await CreateToDo("Todo2", DateTime.UtcNow.AddHours(0));
+        await CreateToDo("Todo2", DateTime.UtcNow.AddHours(2));
 
         // Act
         var response = await Client.GetAsync("/todos");
