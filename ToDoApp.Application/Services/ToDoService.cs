@@ -1,4 +1,5 @@
 using ToDoApp.Application.Commands;
+using ToDoApp.Application.DTOs;
 using ToDoApp.Application.Enums;
 using ToDoApp.Application.Exceptions;
 using ToDoApp.Application.Interfaces.Persistence;
@@ -18,21 +19,25 @@ public class ToDoService : IToDoService
         _unitOfWork = unitOfWork;
     }
 
-    public Task<List<ToDo>> GetAllAsync()
+    public async Task<List<ToDoDto>> GetAllAsync()
     {
-        return _toDoRepository.GetAllAsync();
+        var todos = await _toDoRepository.GetAllAsync();
+        return todos.Select(x =>
+            new ToDoDto(x.Id, x.Title, x.Description, x.Expiry, x.PercentComplete)
+        ).ToList();
     }
 
-    public async Task<ToDo?> GetByIdAsync(Guid id)
+    public async Task<ToDoDto?> GetByIdAsync(Guid id)
     {
         var todo = await _toDoRepository.GetByIdAsync(id);
         if (todo is null)
             throw new ToDoDoesNotExistException(id);
 
-        return todo;
+        var dto = new ToDoDto(todo.Id, todo.Title, todo.Description, todo.Expiry, todo.PercentComplete);
+        return dto;
     }
 
-    public Task<List<ToDo>> GetIncomingAsync(IncomingScope scope)
+    public async Task<List<ToDoDto>> GetIncomingAsync(IncomingScope scope)
     {
         var today = DateTime.Today;
         
@@ -73,7 +78,11 @@ public class ToDoService : IToDoService
             }
         }
 
-        return _toDoRepository.GetIncomingBetweenAsync(start, end);
+        
+        var todos = await _toDoRepository.GetIncomingBetweenAsync(start, end);
+        return todos.Select(x =>
+            new ToDoDto(x.Id, x.Title, x.Description, x.Expiry, x.PercentComplete)
+        ).ToList();
     }
 
     public async Task CreateAsync(CreateToDoCommand command)
