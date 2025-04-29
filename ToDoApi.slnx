@@ -3,7 +3,8 @@
     <File Path="docker-compose.yaml" />
     <File Path="docker-compose.dev.yaml" />
   </Folder>
-  <Project Path="ToDo.API\ToDo.API.csproj" Type="Classic C#" />
-  <Project Path="ToDo.Application\ToDo.Application.csproj" Type="Classic C#" />
-  <Project Path="ToDo.Persistence\ToDo.Persistence.csproj" Type="Classic C#" />
+  <Project Path="ToDo.Tests\ToDoApp.Tests\ToDoApp.Tests.csproj" Type="Classic C#" />
+  <Project Path="ToDoApp.API\ToDoApp.API.csproj" Type="Classic C#" />
+  <Project Path="ToDoApp.Application\ToDoApp.Application.csproj" Type="Classic C#" />
+  <Project Path="ToDoApp.Persistence\ToDoApp.Persistence.csproj" Type="Classic C#" />
 </Solution>

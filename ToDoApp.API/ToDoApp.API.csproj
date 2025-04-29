@@ -25,8 +25,8 @@
     </ItemGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\ToDo.Application\ToDo.Application.csproj" />
-      <ProjectReference Include="..\ToDo.Persistence\ToDo.Persistence.csproj" />
+      <ProjectReference Include="..\ToDoApp.Application\ToDoApp.Application.csproj" />
+      <ProjectReference Include="..\ToDoApp.Persistence\ToDoApp.Persistence.csproj" />
     </ItemGroup>
 
 </Project>
