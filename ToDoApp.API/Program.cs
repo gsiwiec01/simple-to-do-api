@@ -20,15 +20,8 @@ builder.Services.AddValidatorsFromAssemblyContaining<CreateToDoRequestValidator>
 
 var app = builder.Build();
 
-// Configure the HTTP request pipeline.
-if (app.Environment.IsDevelopment())
-{
-    app.MapOpenApi();
-    app.MapScalarApiReference(opt =>
-    {
-        opt.WithTitle("Simple ToDo Api");
-    });
-}
+app.MapOpenApi();
+app.MapScalarApiReference(opt => { opt.WithTitle("Simple ToDo Api"); });
 
 app.UseExceptionHandler(); // Enables centralized exception handling.
 app.UseHttpsRedirection();
@@ -41,4 +34,6 @@ app.Run();
 /// <summary>
 /// Dummy Program class required for integration testing.
 /// </summary>
-public partial class Program { }
+public partial class Program
+{
+}
