@@ -3,7 +3,6 @@ using ToDoApp.API.Configuration.Exceptions;
 using ToDoApp.API.Endpoints;
 using ToDoApp.Application;
 using ToDoApp.Persistence;
-using ToDoApp.Persistence.Data;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -11,10 +10,10 @@ var builder = WebApplication.CreateBuilder(args);
 // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
 builder.Services.AddOpenApi();
 
-builder.Services.AddDatabase(builder.Configuration, "ToDoDatabase");
-builder.Services.AddServices();
-builder.Services.AddProblemDetails();
-builder.Services.AddExceptionHandler<GlobalExceptionHandler>();
+builder.Services.AddDatabase(builder.Configuration, "ToDoDatabase"); // Adds the database context and connection.
+builder.Services.AddServices(); // Registers application and infrastructure services.
+builder.Services.AddProblemDetails(); // Adds RFC 7807 standardized error responses.
+builder.Services.AddExceptionHandler<GlobalExceptionHandler>(); // Registers the global exception handler.
 
 var app = builder.Build();
 
@@ -28,12 +27,15 @@ if (app.Environment.IsDevelopment())
     });
 }
 
-app.UseExceptionHandler();
+app.UseExceptionHandler(); // Enables centralized exception handling.
 app.UseHttpsRedirection();
-app.UseDatabase();
+app.UseDatabase(); // Applies any pending database migrations.
 
-app.MapToDoEndpoints();
+app.MapToDoEndpoints(); // Maps the ToDo endpoints.
 
 app.Run();
 
+/// <summary>
+/// Dummy Program class required for integration testing.
+/// </summary>
 public partial class Program { }
