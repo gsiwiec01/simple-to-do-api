@@ -26,7 +26,7 @@ internal class ToDoRepository : IToDoRepository
     public Task<List<Application.Models.ToDo>> GetIncomingBetweenAsync(DateTime start, DateTime end)
     {
         return _context.Todos
-            .Where(x => x.Expiry >= start && x.Expiry <= end)
+            .Where(x => x.Expiry >= start.ToUniversalTime() && x.Expiry <= end.ToUniversalTime())
             .ToListAsync();
     }
 
