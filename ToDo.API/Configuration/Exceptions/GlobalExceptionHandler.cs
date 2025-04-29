@@ -11,6 +11,9 @@ public class GlobalExceptionHandler : IExceptionHandler
         {
             ToDoDoesNotExistException => StatusCodes.Status404NotFound,
             UnknownScopeOfIncomingToDosException => StatusCodes.Status400BadRequest,
+            ToDoTitleCannotBeEmptyException => StatusCodes.Status400BadRequest,
+            ToDoPercentCompleteMustBeBetweenException => StatusCodes.Status400BadRequest,
+            ToDoExpiryDateCannotBeInThePastException => StatusCodes.Status400BadRequest,
             _ => StatusCodes.Status500InternalServerError
         };
 
