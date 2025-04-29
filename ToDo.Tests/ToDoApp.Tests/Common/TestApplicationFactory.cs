@@ -9,18 +9,17 @@ using ToDoApp.Persistence.Data;
 
 namespace ToDoApp.Tests.Integration;
 
-public class TestApplicationFactory : WebApplicationFactory<Program>
+public class TestApplicationFactory : WebApplicationFactory<Program>, IAsyncLifetime
 {
     private readonly PostgreSqlContainer _dbContainer = new PostgreSqlBuilder()
         .WithImage("postgres")
         .WithUsername("root")
         .WithPassword("root")
+        .WithCleanUp(true)
         .Build();
     
     protected override void ConfigureWebHost(IWebHostBuilder builder)
     {
-        _dbContainer.StartAsync().GetAwaiter().GetResult();
-        
         builder.ConfigureTestServices(x =>
         {
             var serviceDescriptor = typeof(ToDoContext);
@@ -35,10 +34,14 @@ public class TestApplicationFactory : WebApplicationFactory<Program>
             });
         });
     }
-
-    public override ValueTask DisposeAsync()
+    
+    public Task InitializeAsync()
     {
-        _dbContainer.DisposeAsync().AsTask().Wait();
-        return base.DisposeAsync();
+        return _dbContainer.StartAsync();
+    }
+
+    public Task DisposeAsync()
+    {
+        return _dbContainer.StopAsync();
     }
 }
