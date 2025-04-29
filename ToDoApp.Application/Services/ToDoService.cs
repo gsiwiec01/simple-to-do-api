@@ -64,7 +64,7 @@ public class ToDoService : IToDoService
 
             case IncomingScope.Week:
             {
-                var daysUntilEndOfWeek = DayOfWeek.Sunday - today.DayOfWeek;
+                var daysUntilEndOfWeek = DayOfWeek.Saturday - today.DayOfWeek;
                 
                 start = today;
                 end = today.AddDays(daysUntilEndOfWeek + 1).AddTicks(-1);
@@ -77,7 +77,6 @@ public class ToDoService : IToDoService
                 throw new UnknownScopeOfIncomingToDosException(scope.ToString());
             }
         }
-
         
         var todos = await _toDoRepository.GetIncomingBetweenAsync(start, end);
         return todos.Select(x =>
