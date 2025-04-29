@@ -3,11 +3,11 @@
 ENV ASPNETCORE_ENVIRONMENT=Development
 WORKDIR /app
 
-COPY ["ToDo.API/ToDo.API.csproj", "ToDo.API/"]
-COPY ["ToDo.Application/ToDo.Application.csproj", "ToDo.Application/"]
-COPY ["ToDo.Persistence/ToDo.Persistence.csproj", "ToDo.Persistence/"]
+COPY ["ToDoApp.API/ToDoApp.API.csproj", "ToDoApp.API/"]
+COPY ["ToDoApp.Application/ToDoApp.Application.csproj", "ToDoApp.Application/"]
+COPY ["ToDoApp.Persistence/ToDoApp.Persistence.csproj", "ToDoApp.Persistence/"]
 
-RUN dotnet restore "ToDo.API/ToDo.API.csproj"
+RUN dotnet restore "ToDoApp.API/ToDoApp.API.csproj"
 COPY . .
 
 ENV ASPNETCORE_ENVIRONMENT=Development
@@ -15,4 +15,4 @@ ENV ASPNETCORE_ENVIRONMENT=Development
 EXPOSE 8080
 EXPOSE 8081
 
-ENTRYPOINT ["dotnet", "ToDo.API.dll"]
+ENTRYPOINT ["dotnet", "ToDoApp.API.dll"]

@@ -4,7 +4,7 @@
     hostname: todo.api.dev
     build:
       context: .
-      dockerfile: ToDo.API/Dockerfile.dev
+      dockerfile: ToDoApp.API/Dockerfile.dev
     depends_on:
       database:
         condition: service_healthy
